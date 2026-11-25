@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
@@ -384,6 +383,7 @@ button {
 .progress-fill {
     height: 100%;
     border-radius: 20px;
+    transition: width 0.4s ease;
 }
 
 .purple-fill { background: linear-gradient(90deg, #7848db, #b08aff); }
@@ -397,7 +397,7 @@ button {
     height: 160px;
     margin: 12px auto;
     border-radius: 50%;
-    background: conic-gradient(#9466ff 0% 76%, #293148 76% 100%);
+    background: conic-gradient(#9466ff 0% 50%, #293148 50% 100%);
     display: grid;
     place-items: center;
 }
@@ -544,6 +544,22 @@ form .primary-btn {
     border-radius: 20px;
     padding: 8px 13px;
     font-size: 11px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.skill-delete-btn {
+    background: transparent;
+    border: none;
+    color: #ff8ea1;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0 2px;
+}
+
+.skill-delete-btn:hover {
+    color: #ff4f6d;
 }
 
 .roadmap-step {
@@ -588,6 +604,8 @@ form .primary-btn {
 
 .chat-messages {
     min-height: 230px;
+    max-height: 360px;
+    overflow-y: auto;
     padding: 20px 0;
 }
 
@@ -638,6 +656,89 @@ footer {
     border-top: 1px solid var(--border);
     color: var(--muted);
     font-size: 10px;
+}
+
+/* Auth Overlay */
+
+.auth-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 50% 20%, #24194a, var(--bg) 65%);
+    display: grid;
+    place-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 400px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.auth-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.auth-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    background: #0b1120;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+}
+
+.auth-tab {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.auth-tab.active {
+    background: var(--purple);
+    color: white;
+}
+
+.auth-submit {
+    width: 100%;
+    margin-top: 22px;
+}
+
+.auth-error {
+    color: #ff6b81;
+    font-size: 12px;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.logout-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 7px 13px;
+    border-radius: 7px;
+    font-size: 12px;
+    transition: 0.2s;
+}
+
+.logout-btn:hover {
+    border-color: #ff6b81;
+    color: #ff6b81;
 }
 
 /* Responsive Design */

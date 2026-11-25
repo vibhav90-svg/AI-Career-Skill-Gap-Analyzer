@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +9,41 @@
 </head>
 <body>
 
-    <div class="app-container">
+    <!-- Auth Screen (Login / Register) -->
+    <div id="authScreen" class="auth-overlay">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <span class="logo-icon">✦</span>
+                <h2>SkillNova</h2>
+            </div>
+
+            <div class="auth-tabs">
+                <button type="button" class="auth-tab active" id="loginTab">Login</button>
+                <button type="button" class="auth-tab" id="registerTab">Register</button>
+            </div>
+
+            <form id="authForm">
+                <div id="nameGroup" class="hidden">
+                    <label for="authName">Full Name</label>
+                    <input type="text" id="authName" placeholder="Enter your full name">
+                </div>
+
+                <label for="authEmail">Email Address</label>
+                <input type="email" id="authEmail" placeholder="Enter your email" required>
+
+                <label for="authPassword">Password</label>
+                <input type="password" id="authPassword" placeholder="Enter your password (min 6 chars)" required>
+
+                <p id="authError" class="auth-error hidden"></p>
+
+                <button type="submit" class="primary-btn auth-submit" id="authSubmitBtn">
+                    Login to Dashboard →
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="app-container hidden">
 
         <!-- Sidebar -->
         <aside class="sidebar">
@@ -53,7 +86,7 @@
                     <div class="avatar">VP</div>
                     <div>
                         <h4>Student Profile</h4>
-                        <p>Free Account</p>
+                        <p id="sidebarRole">Data Scientist</p>
                     </div>
                 </div>
             </div>
@@ -64,14 +97,15 @@
 
             <header class="topbar">
                 <div>
-                    <p class="breadcrumb">Pages / Dashboard</p>
-                    <h2>Dashboard</h2>
+                    <p class="breadcrumb" id="breadcrumbText">Pages / Dashboard</p>
+                    <h2 id="topbarTitle">Dashboard</h2>
                 </div>
 
                 <div class="topbar-right">
                     <span class="status">● System Online</span>
                     <button class="notification">♧</button>
                     <div class="avatar">VP</div>
+                    <button id="logoutBtn" class="logout-btn">Logout</button>
                 </div>
             </header>
 
@@ -106,7 +140,7 @@
                             <span>Total Skills</span>
                             <span class="stat-icon purple">◈</span>
                         </div>
-                        <h2>12</h2>
+                        <h2 id="totalSkillsCount">00</h2>
                         <p>Skills added to profile</p>
                     </div>
 
@@ -115,8 +149,8 @@
                             <span>Career Readiness</span>
                             <span class="stat-icon blue">↗</span>
                         </div>
-                        <h2>76%</h2>
-                        <p>Illustrative progress score</p>
+                        <h2 id="readinessStat">0%</h2>
+                        <p>Calculated from your skills</p>
                     </div>
 
                     <div class="stat-card">
@@ -124,7 +158,7 @@
                             <span>Job Matches</span>
                             <span class="stat-icon pink">⌕</span>
                         </div>
-                        <h2>08</h2>
+                        <h2 id="jobMatchCount">03</h2>
                         <p>Potential matching roles</p>
                     </div>
 
@@ -133,7 +167,7 @@
                             <span>Learning Hours</span>
                             <span class="stat-icon green">◷</span>
                         </div>
-                        <h2>48h</h2>
+                        <h2 id="learningHoursCount">12h</h2>
                         <p>Hours tracked this month</p>
                     </div>
                 </div>
@@ -146,66 +180,23 @@
                                 <h3>Skill Distribution</h3>
                                 <p>Your current technical skill levels</p>
                             </div>
-                            <span class="panel-badge">OVERVIEW</span>
+                            <span class="panel-badge">LIVE DATA</span>
                         </div>
 
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span>Python</span><span>85%</span>
-                            </div>
-                            <div class="progress-track">
-                                <div class="progress-fill purple-fill" style="width:85%"></div>
-                            </div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span>Machine Learning</span><span>65%</span>
-                            </div>
-                            <div class="progress-track">
-                                <div class="progress-fill blue-fill" style="width:65%"></div>
-                            </div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span>SQL</span><span>70%</span>
-                            </div>
-                            <div class="progress-track">
-                                <div class="progress-fill pink-fill" style="width:70%"></div>
-                            </div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span>Data Visualization</span><span>55%</span>
-                            </div>
-                            <div class="progress-track">
-                                <div class="progress-fill green-fill" style="width:55%"></div>
-                            </div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span>Deep Learning</span><span>40%</span>
-                            </div>
-                            <div class="progress-track">
-                                <div class="progress-fill orange-fill" style="width:40%"></div>
-                            </div>
-                        </div>
+                        <div id="dashboardSkillBars"></div>
                     </div>
 
                     <div class="panel readiness-panel">
                         <div class="panel-heading">
                             <div>
                                 <h3>Career Readiness</h3>
-                                <p>Illustrative readiness indicator</p>
+                                <p>Based on your skill proficiency</p>
                             </div>
                         </div>
 
-                        <div class="readiness-circle">
+                        <div class="readiness-circle" id="readinessCircle">
                             <div class="circle-inner">
-                                <h2>76%</h2>
+                                <h2 id="readinessCircleText">0%</h2>
                                 <span>Readiness</span>
                             </div>
                         </div>
@@ -250,7 +241,7 @@
 
             </section>
 
-            <!-- Other Pages -->
+            <!-- Profile Page -->
             <section class="page-section hidden" id="profile">
                 <div class="page-title">
                     <h1>My Profile</h1>
@@ -259,13 +250,13 @@
                 <div class="panel">
                     <h3>Student Information</h3>
                     <form id="profileForm">
-                        <label>Full Name</label>
-                        <input type="text" id="studentName" placeholder="Enter your name">
-                        <label>Email Address</label>
-                        <input type="email" id="studentEmail" placeholder="Enter your email">
-                        <label>Education</label>
-                        <input type="text" placeholder="B.Tech CSE - Data Science & AI">
-                        <label>Target Career</label>
+                        <label for="studentName">Full Name</label>
+                        <input type="text" id="studentName" placeholder="Enter your name" required>
+                        <label for="studentEmail">Email Address</label>
+                        <input type="email" id="studentEmail" placeholder="Enter your email" required>
+                        <label for="studentEducation">Education</label>
+                        <input type="text" id="studentEducation" placeholder="B.Tech CSE - Data Science & AI">
+                        <label for="targetCareer">Target Career</label>
                         <select id="targetCareer">
                             <option>Data Scientist</option>
                             <option>Data Analyst</option>
@@ -277,17 +268,18 @@
                 </div>
             </section>
 
+            <!-- Skill Analyzer Page -->
             <section class="page-section hidden" id="skills">
                 <div class="page-title">
                     <h1>Skill Analyzer</h1>
-                    <p>Explore your skills and identify areas for improvement.</p>
+                    <p>Add or remove skills to update your dashboard and career readiness.</p>
                 </div>
                 <div class="panel">
                     <h3>Add Your Skills</h3>
                     <form id="skillForm">
-                        <label>Skill Name</label>
+                        <label for="skillName">Skill Name</label>
                         <input id="skillName" placeholder="Example: Python" required>
-                        <label>Proficiency Level</label>
+                        <label for="skillLevel">Proficiency Level</label>
                         <select id="skillLevel">
                             <option value="Beginner">Beginner</option>
                             <option value="Intermediate">Intermediate</option>
@@ -299,6 +291,7 @@
                 </div>
             </section>
 
+            <!-- Jobs Page -->
             <section class="page-section hidden" id="jobs">
                 <div class="page-title">
                     <h1>Job Matches</h1>
@@ -323,6 +316,7 @@
                 </div>
             </section>
 
+            <!-- Roadmap Page -->
             <section class="page-section hidden" id="roadmap">
                 <div class="page-title">
                     <h1>Learning Roadmap</h1>
@@ -352,21 +346,22 @@
                 </div>
             </section>
 
+            <!-- Assistant Page -->
             <section class="page-section hidden" id="assistant">
                 <div class="page-title">
                     <h1>AI Career Assistant</h1>
-                    <p>Your career guidance interface.</p>
+                    <p>Ask about your skill gaps, learning roadmap, or interview prep.</p>
                 </div>
                 <div class="panel chat-panel">
                     <div class="chat-heading">✦ SkillNova AI Assistant</div>
                     <div class="chat-messages" id="chatMessages">
-                        <div class="bot-message">Hello! I'm your career assistant interface. What career would you like to explore?</div>
+                        <div class="bot-message">Hello! I'm connected to your SkillNova profile. Ask me about your "skill gaps", "roadmap", or "interview" prep!</div>
                     </div>
                     <form id="chatForm" class="chat-input">
                         <input id="chatInput" placeholder="Ask a career question..." required>
                         <button type="submit">Send ↑</button>
                     </form>
-                    <p class="demo-note">Demo interface — AI responses will be connected through your future backend.</p>
+                    <p class="demo-note">Powered by your Express backend (/api/assistant/chat).</p>
                 </div>
             </section>
 
